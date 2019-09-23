@@ -12,6 +12,7 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var toDoField: UITextField!
     var toDoItem: String?
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +20,8 @@ class DetailViewController: UIViewController {
         if let toDoItem=toDoItem{
             toDoField.text=toDoItem
         }
-
+        toDoField.becomeFirstResponder()
+        enableDisableSaveButton()
         // Do any additional setup after loading the view.
     }
     
@@ -27,6 +29,23 @@ class DetailViewController: UIViewController {
         if segue.identifier=="UnwindFromSave"{
             toDoItem=toDoField.text
         }
+    }
+    
+    func enableDisableSaveButton(){
+        if let toDoFieldCount=toDoField.text?.count, toDoFieldCount>0{
+            saveBarButton.isEnabled=true
+        } else{
+            saveBarButton.isEnabled=false
+        }
+    }
+    
+    @IBAction func toDoFieldChanged(_ sender: UITextField) {
+//        if toDoField.text!.count>0{
+//            saveBarButton.isEnabled=true
+//        } else{
+//            saveBarButton.isEnabled=false
+//        }
+        enableDisableSaveButton()
     }
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
